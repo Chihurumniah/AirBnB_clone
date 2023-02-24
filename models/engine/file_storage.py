@@ -18,7 +18,6 @@ class FileStorage:
         __file_path: path to the JSON file
         __objects: objects will be stored
     """
-
     __file_path = "file.json"
     __objects = {}
 
@@ -30,7 +29,7 @@ class FileStorage:
         if cls:
             return {key: obj for (key, obj) in self.__objects.items()
                     if isinstance(obj, type(cls))}
-            return self.__objects
+        return self.__objects
 
     def new(self, obj):
         """sets __object to given obj
@@ -68,7 +67,7 @@ class FileStorage:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             if (key, obj) in self.__objects.items():
                 self.__objects.pop(key, None)
-            self.save()
+        self.save()
 
     def close(self):
         """Deserializes the JSON file to objects"""
@@ -101,29 +100,29 @@ class FileStorage:
                       "created_at": datetime.datetime,
                       "updated_at": datetime.datetime},
             "User":
-                    {"email": str,
-                     "password": str,
-                     "first_name": str,
-                     "last_name": str},
+                     {"email": str,
+                      "password": str,
+                      "first_name": str,
+                      "last_name": str},
             "State":
-                    {"name": str},
+                     {"name": str},
             "City":
-                    {"state_id": str,
-                     "name": str},
+                     {"state_id": str,
+                      "name": str},
             "Amenity":
-                    {"name": str},
+                     {"name": str},
             "Place":
-                    {"city_id": str,
-                     "user_id": str,
-                     "name": str,
-                     "description": str,
-                     "number_rooms": int,
-                     "number_bathrooms": int,
-                     "max_guest": int,
-                     "price_by_night": int,
-                     "latitude": float,
-                     "longitude": float,
-                     "amenity_ids": list},
+                     {"city_id": str,
+                      "user_id": str,
+                      "name": str,
+                      "description": str,
+                      "number_rooms": int,
+                      "number_bathrooms": int,
+                      "max_guest": int,
+                      "price_by_night": int,
+                      "latitude": float,
+                      "longitude": float,
+                      "amenity_ids": list},
             "Review":
             {"place_id": str,
                          "user_id": str,
