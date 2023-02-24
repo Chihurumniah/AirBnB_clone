@@ -17,7 +17,6 @@ from shlex import split
 class HBNBCommand(cmd.Cmd):
     """this class is entry point of the command interpreter
     """
-
     prompt = "(hbnb) "
     all_classes = {"BaseModel", "User", "State", "City",
                    "Amenity", "Place", "Review"}
@@ -59,21 +58,20 @@ class HBNBCommand(cmd.Cmd):
                 cast = None
                 if not re.search('^".*"$', value):
                     if '.' in value:
-                        if '.' in value:
-                            cast = float
-                        else:
-                            cast = int
+                        cast = float
                     else:
-                        value = value.replace('"', '')
-                        value = value.replace('_', ' ')
-                    if cast:
-                        try:
-                            value = cast(value)
-                        except ValueError:
-                            pass
-                    setattr(obj, key, value)
-                    obj.save()
-                    print("{}".format(obj.id))
+                        cast = int
+                else:
+                    value = value.replace('"', '')
+                    value = value.replace('_', ' ')
+                if cast:
+                    try:
+                        value = cast(value)
+                    except ValueError:
+                        pass
+                setattr(obj, key, value)
+            obj.save()
+            print("{}".format(obj.id))
 
     def do_show(self, line):
         """Prints the string representation of an instance
@@ -121,14 +119,14 @@ class HBNBCommand(cmd.Cmd):
                 storage.save()
             else:
                 raise KeyError()
-            except SyntaxError:
-                print("** class name missing **")
-            except NameError:
-                print("** class doesn't exist **")
-            except IndexError:
-                print("** instance id missing **")
-            except KeyError:
-                print("** no instance found **")
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+        except IndexError:
+            print("** instance id missing **")
+        except KeyError:
+            print("** no instance found **")
 
     def do_all(self, line):
         """Prints all string representation of all instances
@@ -148,11 +146,17 @@ class HBNBCommand(cmd.Cmd):
                 my_list.append(objects[key])
             print(my_list)
             return
+        # try:
+            # args = line.split(" ")
+            # if args[0] not in self.all_classes:
+            #     raise NameError()
         for key in objects:
             name = key.split('.')
             if name[0] == args[0]:
                 my_list.append(objects[key])
-            print(my_list)
+        print(my_list)
+        # except NameError:
+        #     print("** class doesn't exist **")
 
     def do_update(self, line):
         """Updates an instanceby adding or updating attribute
@@ -221,8 +225,8 @@ class HBNBCommand(cmd.Cmd):
         Args:
             args: input list of args
         Return:
+            returns string of argumetns
         """
-
         new_list = []
         new_list.append(args[0])
         try:
@@ -260,10 +264,10 @@ class HBNBCommand(cmd.Cmd):
                     key = args[0] + ' ' + args[1]
                     for k, v in args[2].items():
                         self.do_update(key + ' "{}" "{}"'.format(k, v))
-                    else:
-                        self.do_update(args)
-            else:
-                cmd.Cmd.default(self, line)
+                else:
+                    self.do_update(args)
+        else:
+            cmd.Cmd.default(self, line)
 
 
 if __name__ == '__main__':
