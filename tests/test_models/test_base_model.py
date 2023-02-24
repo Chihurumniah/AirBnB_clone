@@ -36,6 +36,13 @@ class TestBaseModelDocs(unittest.TestCase):
 
     def test_class_docstring(self):
         """Test for the BaseModel class docstring"""
+        self.assertIsNot(BaseModel.__doc__, None,
+                         "BaseModel class needs a docstring")
+        self.assertTrue(len(BaseModel.__doc__) >= 1,
+                        "BaseModel class needs a docstring")
+
+    def test_func_docstrings(self):
+        """Test for the presence of docstrings in BaseModel methods"""
         for func in self.base_funcs:
             with self.subTest(function=func):
                 self.assertIsNot(
